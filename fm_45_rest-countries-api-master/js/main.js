@@ -1,5 +1,6 @@
 let btnToggleDarkMode = document.querySelector("#btn-toggle-dark-mode");
 let sectionMain = document.querySelector('#countries-selection-box');
+
 const  dataApi = async()=>{
   const response = await fetch("https://restcountries.com/v3.1/all?fields=name,capital,population,region,flags")
   const dataContry = await response.json()
@@ -37,6 +38,7 @@ async function init() {
     </div>
   </div>
 </div>`;
+
     sectionMain.insertAdjacentHTML("beforeend", text);
     // console.log(element);
   });
@@ -46,11 +48,6 @@ async function init() {
 }
 
 let filter = document.querySelector('#region-selector-title')
-filter.addEventListener('click', function () {
-  filter.classList.remove('display-none')
-  document.querySelector('#region-selector-menu').classList.remove('display-none')
-  
-  
-})
+
 
 window.onload = init();
