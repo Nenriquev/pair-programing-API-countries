@@ -49,5 +49,47 @@ async function init() {
 
 let filter = document.querySelector('#region-selector-title')
 
+let menu = document.querySelector('select')
+
+menu.addEventListener('change' , async function filterByRegion(e) {
+  const response = await fetch(`https://restcountries.com/v3.1/region/${e.target.value}`)
+  const dataRegion = await response.json()
+  
+  sectionMain.innerHTML = ''
+  
+    dataRegion.forEach(element => {
+    const population = new Intl.NumberFormat().format(element.population) 
+    const text = `<div>
+  <div>
+      <img src=${element.flags.png} alt="#">
+    </div>
+    <div>
+      <div class="text-container1">
+        <h1> ${element.name.common}</h1>
+        <p>
+          <span>Population: ${population}</span>
+          <span id="detail-population"></span>
+        </p>
+        <p>
+          <span>Region: ${element.region} </span>
+          <span id="detail-region"></span>
+        </p>
+        <p><span>Capital: ${element.capital}</span>
+        </p>
+      </div>
+    </div>
+  </div>`;
+  
+      sectionMain.insertAdjacentHTML("beforeend", text);
+      // console.log(element);
+    });
+
+  if (e.target.value === '') {
+  init()
+    
+  }
+
+})
+
 
 window.onload = init();
