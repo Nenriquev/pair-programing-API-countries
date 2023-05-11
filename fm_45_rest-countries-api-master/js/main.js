@@ -1,7 +1,7 @@
 let btnToggleDarkMode = document.querySelector("#btn-toggle-dark-mode");
 let sectionMain = document.querySelector('#countries-selection-box');
 const  dataApi = async()=>{
-  const response = await fetch("https://restcountries.com/v3.1/all?fields=name,capital,population,region")
+  const response = await fetch("https://restcountries.com/v3.1/all?fields=name,capital,population,region,flags")
   const dataContry = await response.json()
   return dataContry;
   // console.log(dataContry);
@@ -16,23 +16,23 @@ function toggleDarkMode() {
 async function init() {
   const data = await dataApi(); 
   data.forEach(element => {
+  const population = new Intl.NumberFormat().format(element.population) 
   const text = `<div>
 <div>
-    <img src='' alt="#">
+    <img src=${element.flags.png} alt="#">
   </div>
   <div>
     <div class="text-container1">
-      <h1>name</h1>
+      <h1> ${element.name.common}</h1>
       <p>
-        <span>Population: </span>
+        <span>Population: ${population}</span>
         <span id="detail-population"></span>
       </p>
       <p>
-        <span>Region: </span>
+        <span>Region: ${element.region} </span>
         <span id="detail-region"></span>
       </p>
-      <p><span>Capital: </span>
-        <span id="detail-capital">Ul</span>
+      <p><span>Capital: ${element.capital}</span>
       </p>
     </div>
   </div>
@@ -44,5 +44,13 @@ async function init() {
   btnToggleDarkMode.addEventListener("click", toggleDarkMode);
 
 }
+
+let filter = document.querySelector('#region-selector-title')
+filter.addEventListener('click', function () {
+  filter.classList.remove('display-none')
+  document.querySelector('#region-selector-menu').classList.remove('display-none')
+  
+  
+})
 
 window.onload = init();
